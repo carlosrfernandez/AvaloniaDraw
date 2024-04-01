@@ -3,14 +3,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avaloniaDraw="clr-namespace:AvaloniaDraw"
+        xmlns:toolbox="clr-namespace:AvaloniaDraw.Toolbox"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaDraw.MainWindow"
         x:DataType="avaloniaDraw:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
         Title="AvaloniaDraw">
     
     <DockPanel>
-        <avaloniaDraw:Toolbox DockPanel.Dock="Left" DataContext="{Binding Toolbox}" />
+        <toolbox:ToolboxPanel DockPanel.Dock="Left" Width="100" DataContext="{Binding ToolboxPanel}" />
         <avaloniaDraw:DrawingCanvas DataContext="{Binding DrawingCanvas}" />
     </DockPanel>
 

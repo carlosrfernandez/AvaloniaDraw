@@ -6,40 +6,34 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaDraw.DrawingCanvas"
              x:DataType="avaloniaDraw:DrawingCanvasViewModel">
-     <ItemsControl ItemsSource="{Binding Ellipses}" ZIndex="0">
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding PointerInfoText}" />
+        <ItemsControl ItemsSource="{Binding Ellipses}" ZIndex="0">
             <ItemsControl.ItemsPanel>
-                <!-- Each ItemsControl has a panel, which in WPF is something that arranges items within it 
-                     Canvas is the simplest panel, which just lets us put items anywhere within (position is controlled
-                     by the margin on each item -->
+                <!-- Use a canvas as our panel to allow the shapes to be positioned with x & y coords -->
                 <ItemsPanelTemplate>
-                    <Canvas Name="ClientArea" Background="White" />
+                    <Canvas Background="White">
+                        <Interaction.Behaviors>
+                            <avaloniaDraw:CapturePointerInfoBehaviour 
+                                PointerInfoStream="{Binding PointerInfoStream, Mode=OneWayToSource}" />
+                        </Interaction.Behaviors>
+                    </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Ellipse Fill="Red" Stroke="Black" StrokeThickness="3"
+                    <Ellipse Fill="{Binding FillColour, Mode=OneWay}" Stroke="{Binding OutlineColour, Mode=OneWay}" 
+                             StrokeThickness="3"
                              Width="{Binding Width}" Height="{Binding Height}"
                              Opacity="{Binding Opacity}"
                              Canvas.Left="{Binding Centre.X}"
                              Canvas.Top="{Binding Centre.Y}">
                         
                     </Ellipse>
-                    <!-- <Ellipse Fill="{Binding Path=SelectedItem, ElementName=FillComboBox, Mode=OneTime}" -->
-                    <!--          Stroke="{Binding Path=SelectedItem, ElementName=BorderComboBox, Mode=OneTime}" -->
-                    <!--          StrokeThickness="3" Width="{Binding Width}" Height="{Binding Height}" Opacity="{Binding Opacity}"> -->
-                    <!--     <Ellipse.Margin> -->
-                    <!--         <MultiBinding Converter="{StaticResource converter}"> -->
-                    <!--             <MultiBinding.Bindings> -->
-                    <!--                 <Binding Path="Centre" /> -->
-                    <!--                 <Binding Path="Width" /> -->
-                    <!--                 <Binding Path="Height" /> -->
-                    <!--                 <Binding Path="." ElementName="ClientArea" /> -->
-                    <!--                 <Binding Path="." ElementName="Window" /> -->
-                    <!--             </MultiBinding.Bindings> -->
-                    <!--         </MultiBinding> -->
-                    <!--     </Ellipse.Margin> -->
-                    <!-- </Ellipse> -->
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+    </DockPanel>
+    
+
 </UserControl>

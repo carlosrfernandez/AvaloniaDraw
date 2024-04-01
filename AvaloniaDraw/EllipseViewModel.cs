@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Media;
 using ReactiveUI;
 
 namespace AvaloniaDraw;
@@ -36,4 +37,20 @@ public class EllipseViewModel : ViewModelBase
         get => _opacity;
         set => this.RaiseAndSetIfChanged(ref _opacity, value);
     }
+
+    private Brush _outlineColour;
+
+    public Brush OutlineColour
+    {
+        get => _outlineColour;
+        set => this.RaiseAndSetIfChanged(ref _outlineColour, value);
+    }
+
+    private Brush _fillColour;
+
+    public Brush FillColour
+    {
+        get => _fillColour;
+        set => this.RaiseAndSetIfChanged(ref _fillColour, value);
+    }   
 }
