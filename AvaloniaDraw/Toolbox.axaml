@@ -1,0 +1,18 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avaloniaDraw="clr-namespace:AvaloniaDraw"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaDraw.Toolbox"
+             x:DataType="avaloniaDraw:ToolboxViewModel"
+             Background="White"
+             Foreground="Black">
+    <StackPanel>
+        <TextBlock Text="Hello World!"></TextBlock>
+        <avaloniaDraw:ColourSelector LabelText="Fill Colour:" />
+        <avaloniaDraw:ColourSelector LabelText="Border Colour:" />
+        <Button Margin="25,0,0,0" Content="Add" Command="{Binding AddShape }" />
+        <!-- <Button Margin="25,0,0,0" Content="Clear" Click="ButtonClick" /> -->
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,45 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avaloniaDraw="clr-namespace:AvaloniaDraw"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaDraw.DrawingCanvas"
+             x:DataType="avaloniaDraw:DrawingCanvasViewModel">
+     <ItemsControl ItemsSource="{Binding Ellipses}" ZIndex="0">
+            <ItemsControl.ItemsPanel>
+                <!-- Each ItemsControl has a panel, which in WPF is something that arranges items within it 
+                     Canvas is the simplest panel, which just lets us put items anywhere within (position is controlled
+                     by the margin on each item -->
+                <ItemsPanelTemplate>
+                    <Canvas Name="ClientArea" Background="White" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Fill="Red" Stroke="Black" StrokeThickness="3"
+                             Width="{Binding Width}" Height="{Binding Height}"
+                             Opacity="{Binding Opacity}"
+                             Canvas.Left="{Binding Centre.X}"
+                             Canvas.Top="{Binding Centre.Y}">
+                        
+                    </Ellipse>
+                    <!-- <Ellipse Fill="{Binding Path=SelectedItem, ElementName=FillComboBox, Mode=OneTime}" -->
+                    <!--          Stroke="{Binding Path=SelectedItem, ElementName=BorderComboBox, Mode=OneTime}" -->
+                    <!--          StrokeThickness="3" Width="{Binding Width}" Height="{Binding Height}" Opacity="{Binding Opacity}"> -->
+                    <!--     <Ellipse.Margin> -->
+                    <!--         <MultiBinding Converter="{StaticResource converter}"> -->
+                    <!--             <MultiBinding.Bindings> -->
+                    <!--                 <Binding Path="Centre" /> -->
+                    <!--                 <Binding Path="Width" /> -->
+                    <!--                 <Binding Path="Height" /> -->
+                    <!--                 <Binding Path="." ElementName="ClientArea" /> -->
+                    <!--                 <Binding Path="." ElementName="Window" /> -->
+                    <!--             </MultiBinding.Bindings> -->
+                    <!--         </MultiBinding> -->
+                    <!--     </Ellipse.Margin> -->
+                    <!-- </Ellipse> -->
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+</UserControl>
