@@ -6,28 +6,20 @@ namespace AvaloniaDraw;
 
 public class EllipseViewModel : ViewModelBase
 {
-    private int _width;
-    
-    public int Width
+    private Point _origin;
+
+    public Point Origin
     {
-        get => _width;
-        set => this.RaiseAndSetIfChanged(ref _width, value);
+        get => _origin;
+        set => this.RaiseAndSetIfChanged(ref _origin, value);
     }
 
-    private int _height;
+    private Rect _bounds;
 
-    public int Height
+    public Rect Bounds
     {
-        get => _height;
-        set => this.RaiseAndSetIfChanged(ref _height, value);
-    }
-
-    private Point _centre;
-
-    public Point Centre
-    {
-        get => _centre;
-        set => this.RaiseAndSetIfChanged(ref _centre, value);
+        get => _bounds;
+        set => this.RaiseAndSetIfChanged(ref _bounds, value);
     }
 
     private double _opacity;

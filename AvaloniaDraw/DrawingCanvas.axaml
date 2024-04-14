@@ -9,6 +9,12 @@
     <DockPanel>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding PointerInfoText}" />
         <ItemsControl ItemsSource="{Binding Ellipses}" ZIndex="0">
+            <ItemsControl.ItemContainerTheme>
+                <ControlTheme TargetType="ContentPresenter" x:DataType="avaloniaDraw:EllipseViewModel">
+                    <Setter Property="Canvas.Left" Value="{Binding Bounds.Left}" />
+                    <Setter Property="Canvas.Top" Value="{Binding Bounds.Top}" />
+                </ControlTheme>
+            </ItemsControl.ItemContainerTheme>
             <ItemsControl.ItemsPanel>
                 <!-- Use a canvas as our panel to allow the shapes to be positioned with x & y coords -->
                 <ItemsPanelTemplate>
@@ -22,13 +28,10 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Ellipse Fill="{Binding FillColour, Mode=OneWay}" Stroke="{Binding OutlineColour, Mode=OneWay}" 
-                             StrokeThickness="3"
-                             Width="{Binding Width}" Height="{Binding Height}"
-                             Opacity="{Binding Opacity}"
-                             Canvas.Left="{Binding Centre.X}"
-                             Canvas.Top="{Binding Centre.Y}">
-                        
+                    <Ellipse Fill="{Binding FillColour, Mode=OneWay}" 
+                             Stroke="{Binding OutlineColour, Mode=OneWay}" StrokeThickness="3"
+                             Width="{Binding Bounds.Width}" Height="{Binding Bounds.Height}"
+                             Opacity="{Binding Opacity}">
                     </Ellipse>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

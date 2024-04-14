@@ -67,5 +67,4 @@ public class CapturePointerInfoBehaviour : Behavior<Control>
 
         PointerInfoStream = pointerEvents;
     }
-
 }

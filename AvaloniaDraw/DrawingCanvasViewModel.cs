@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text.Json;
+using Avalonia;
 using Avalonia.Media;
 using ReactiveUI;
 
@@ -61,7 +62,7 @@ public class DrawingCanvasViewModel : ViewModelBase, IDisposable
             _activeEllipse = new EllipseViewModel
             {
                 Opacity = 0.3,
-                Centre = pointerInfo.Position,
+                Origin = pointerInfo.Position,
                 FillColour = new SolidColorBrush(_currentFillColour),
                 OutlineColour = new SolidColorBrush(_currentOutlineColour)
             };
@@ -72,12 +73,17 @@ public class DrawingCanvasViewModel : ViewModelBase, IDisposable
 
         if (_activeEllipse != null && pointerInfo.IsPressed)
         {
-            // If the mouse if down and we get an event coming through then update the width and height of the ellipse
-            var width = Math.Abs(Convert.ToInt32(pointerInfo.Position.X - _activeEllipse.Centre.X));
-            var height = Math.Abs(Convert.ToInt32(pointerInfo.Position.Y - _activeEllipse.Centre.Y));
-            
-            _activeEllipse.Width = width;
-            _activeEllipse.Height = height;
+            // If the mouse if down and we get an event coming through then update the bounds of the ellipse
+            var top = Math.Min(_activeEllipse.Origin.Y, pointerInfo.Position.Y);
+            var bottom = Math.Max(_activeEllipse.Origin.Y, pointerInfo.Position.Y);
+            var left = Math.Min(_activeEllipse.Origin.X, pointerInfo.Position.X);
+            var right = Math.Max(_activeEllipse.Origin.X, pointerInfo.Position.X);
+
+            var topLeft = new Point(left, top);
+            var bottomRight = new Point(right, bottom);
+
+            var bounds = new Rect(topLeft, bottomRight);
+            _activeEllipse.Bounds = bounds;
         }
 
         if (pointerInfo.IsEndDrag)
