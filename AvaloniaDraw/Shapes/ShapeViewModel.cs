@@ -1,13 +1,20 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Media;
 using ReactiveUI;
 
-namespace AvaloniaDraw;
+namespace AvaloniaDraw.Shapes;
 
-public class EllipseViewModel : ViewModelBase
+public class ShapeViewModel : ViewModelBase
 {
-    private Point _origin;
+    private string _type = string.Empty;
 
+    public string Type
+    {
+        get => _type;
+        set => this.RaiseAndSetIfChanged(ref _type, value);
+    }
+    
+    private Point _origin;
     public Point Origin
     {
         get => _origin;
@@ -22,6 +29,14 @@ public class EllipseViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _bounds, value);
     }
 
+    private Point _endPosition;
+
+    public Point EndPosition
+    {
+        get => _endPosition;
+        set => this.RaiseAndSetIfChanged(ref _endPosition, value);
+    }
+
     private double _opacity;
 
     public double Opacity
@@ -29,6 +44,14 @@ public class EllipseViewModel : ViewModelBase
         get => _opacity;
         set => this.RaiseAndSetIfChanged(ref _opacity, value);
     }
+
+    private int _strokeWidth;
+
+    public int StrokeWidth
+    {
+        get => _strokeWidth;
+        set => this.RaiseAndSetIfChanged(ref _strokeWidth, value);
+    } 
 
     private Brush _outlineColour;
 

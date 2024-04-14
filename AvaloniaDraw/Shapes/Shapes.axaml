@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:shapes="clr-namespace:AvaloniaDraw.Shapes">
+    <shapes:ShapeDataTemplateSelector x:Key="ShapeTemplateSelector">
+        <DataTemplate x:Key="{x:Static shapes:ShapeTypes.Ellipse}" 
+                      DataType="shapes:ShapeViewModel">
+            <Ellipse Fill="{Binding FillColour, Mode=OneWay}"
+                     Stroke="{Binding OutlineColour, Mode=OneWay}" StrokeThickness="{Binding StrokeWidth}"
+                     Width="{Binding Bounds.Width}" Height="{Binding Bounds.Height}"
+                     Opacity="{Binding Opacity}" />
+        </DataTemplate>
+        <DataTemplate x:Key="{x:Static shapes:ShapeTypes.Rectangle}" 
+                      DataType="shapes:ShapeViewModel">
+            <Rectangle Fill="{Binding FillColour, Mode=OneWay}"
+                       Stroke="{Binding OutlineColour, Mode=OneWay}" StrokeThickness="{Binding StrokeWidth}"
+                       Width="{Binding Bounds.Width}" Height="{Binding Bounds.Height}"
+                       Opacity="{Binding Opacity}" />
+        </DataTemplate>
+        <DataTemplate x:Key="{x:Static shapes:ShapeTypes.Hexagon}" 
+                      DataType="shapes:ShapeViewModel">
+            <shapes:Hexagon Fill="{Binding FillColour, Mode=OneWay}"
+                            Stroke="{Binding OutlineColour, Mode=OneWay}" 
+                            StrokeThickness="{Binding StrokeWidth}" StrokeLineCap="Round"
+                            Width="{Binding Bounds.Width}" Height="{Binding Bounds.Height}"
+                            Opacity="{Binding Opacity}" />
+        </DataTemplate>
+    </shapes:ShapeDataTemplateSelector>
+</ResourceDictionary>

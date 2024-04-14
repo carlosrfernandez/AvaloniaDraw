@@ -3,15 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avaloniaDraw="clr-namespace:AvaloniaDraw"
+             xmlns:shapes="clr-namespace:AvaloniaDraw.Shapes"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaDraw.DrawingCanvas"
              x:DataType="avaloniaDraw:DrawingCanvasViewModel">
     <DockPanel>
-        <TextBlock DockPanel.Dock="Bottom" Text="{Binding PointerInfoText}" HorizontalAlignment="Right"
-                   Margin="0,5,20,5"/>
-        <ItemsControl ItemsSource="{Binding Ellipses}" ZIndex="0">
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding PointerInfoText}"
+                   HorizontalAlignment="Right" Margin="0,5,20,5"/>
+        <ItemsControl ItemsSource="{Binding Shapes}" ZIndex="0"
+                      ItemTemplate="{StaticResource ShapeTemplateSelector}">
             <ItemsControl.ItemContainerTheme>
-                <ControlTheme TargetType="ContentPresenter" x:DataType="avaloniaDraw:EllipseViewModel">
+                <ControlTheme TargetType="ContentPresenter" x:DataType="shapes:ShapeViewModel">
                     <Setter Property="Canvas.Left" Value="{Binding Bounds.Left}" />
                     <Setter Property="Canvas.Top" Value="{Binding Bounds.Top}" />
                 </ControlTheme>
@@ -27,17 +29,6 @@
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Ellipse Fill="{Binding FillColour, Mode=OneWay}" 
-                             Stroke="{Binding OutlineColour, Mode=OneWay}" StrokeThickness="3"
-                             Width="{Binding Bounds.Width}" Height="{Binding Bounds.Height}"
-                             Opacity="{Binding Opacity}">
-                    </Ellipse>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
         </ItemsControl>
     </DockPanel>
-    
-
 </UserControl>

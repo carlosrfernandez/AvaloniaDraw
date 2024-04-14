@@ -7,6 +7,7 @@
         <entry key="AvaloniaDraw/ColourSelector.axaml" value="AvaloniaDraw/AvaloniaDraw.csproj" />
         <entry key="AvaloniaDraw/DrawingCanvas.axaml" value="AvaloniaDraw/AvaloniaDraw.csproj" />
         <entry key="AvaloniaDraw/MainWindow.axaml" value="AvaloniaDraw/AvaloniaDraw.csproj" />
+        <entry key="AvaloniaDraw/Shapes/Shapes.axaml" value="AvaloniaDraw/AvaloniaDraw.csproj" />
         <entry key="AvaloniaDraw/Toolbox/Toolbox.axaml" value="AvaloniaDraw/AvaloniaDraw.csproj" />
         <entry key="AvaloniaDraw/Toolbox/ToolboxItem.axaml" value="AvaloniaDraw/AvaloniaDraw.csproj" />
         <entry key="AvaloniaDraw/Toolbox/ToolboxPanel.axaml" value="AvaloniaDraw/AvaloniaDraw.csproj" />
