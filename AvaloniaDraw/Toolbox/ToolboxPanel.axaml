@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avaloniaDraw="clr-namespace:AvaloniaDraw"
              xmlns:toolbox="clr-namespace:AvaloniaDraw.Toolbox"
              mc:Ignorable="d" d:DesignWidth="150" d:DesignHeight="600"
              x:Class="AvaloniaDraw.Toolbox.ToolboxPanel"
@@ -10,7 +9,7 @@
     <UserControl.Styles>
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
     </UserControl.Styles>
-    <StackPanel >
+    <StackPanel Margin="10,0">
         <StackPanel HorizontalAlignment="Left" Margin="0,0,0,10">
             <Label Content="Outline" />
             <ColorPicker  Color="{Binding OutlineColour}" />

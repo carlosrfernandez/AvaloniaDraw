@@ -10,7 +10,7 @@
         Title="AvaloniaDraw">
     
     <DockPanel>
-        <toolbox:ToolboxPanel DockPanel.Dock="Left" Width="100" DataContext="{Binding ToolboxPanel}" />
+        <toolbox:ToolboxPanel DockPanel.Dock="Left" DataContext="{Binding ToolboxPanel}" />
         <avaloniaDraw:DrawingCanvas DataContext="{Binding DrawingCanvas}" />
     </DockPanel>
 

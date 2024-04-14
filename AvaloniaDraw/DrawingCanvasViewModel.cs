@@ -54,8 +54,7 @@ public class DrawingCanvasViewModel : ViewModelBase, IDisposable
 
     private void OnPointerInfoChanged(PointerInfo pointerInfo)
     {
-        var text = JsonSerializer.Serialize(pointerInfo);
-        PointerInfoText = text;
+        PointerInfoText = FormatPointerInfo(pointerInfo);
         
         if (pointerInfo.IsDragging && _activeEllipse == null)
         {
@@ -95,6 +94,11 @@ public class DrawingCanvasViewModel : ViewModelBase, IDisposable
                 _activeEllipse = null;
             }
         }
+    }
+
+    private string FormatPointerInfo(PointerInfo pointerInfo)
+    {
+        return $"X: {pointerInfo.Position.X} Y: {pointerInfo.Position.Y}";
     }
 
     public void Dispose()

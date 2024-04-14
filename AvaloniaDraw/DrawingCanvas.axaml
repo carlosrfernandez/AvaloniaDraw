@@ -7,7 +7,8 @@
              x:Class="AvaloniaDraw.DrawingCanvas"
              x:DataType="avaloniaDraw:DrawingCanvasViewModel">
     <DockPanel>
-        <TextBlock DockPanel.Dock="Bottom" Text="{Binding PointerInfoText}" />
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding PointerInfoText}" HorizontalAlignment="Right"
+                   Margin="0,5,20,5"/>
         <ItemsControl ItemsSource="{Binding Ellipses}" ZIndex="0">
             <ItemsControl.ItemContainerTheme>
                 <ControlTheme TargetType="ContentPresenter" x:DataType="avaloniaDraw:EllipseViewModel">
