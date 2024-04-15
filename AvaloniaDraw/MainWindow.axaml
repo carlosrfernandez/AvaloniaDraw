@@ -3,15 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avaloniaDraw="clr-namespace:AvaloniaDraw"
-        xmlns:toolbox="clr-namespace:AvaloniaDraw.Toolbox"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaDraw.MainWindow"
-        x:DataType="avaloniaDraw:MainWindowViewModel"
         Title="AvaloniaDraw">
-    
-    <DockPanel>
-        <toolbox:ToolboxPanel DockPanel.Dock="Left" DataContext="{Binding ToolboxPanel}" />
-        <avaloniaDraw:DrawingCanvas DataContext="{Binding DrawingCanvas}" />
-    </DockPanel>
+        <avaloniaDraw:MainView />
 
 </Window>

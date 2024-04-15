@@ -18,10 +18,18 @@ public partial class App : Application
         services.AddDrawingServices();
         var serviceProvider = services.BuildServiceProvider();
         
-        var vm = serviceProvider.GetRequiredService<MainWindowViewModel>();
+        var vm = serviceProvider.GetRequiredService<MainViewViewModel>();
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
+            {
+                DataContext = vm
+            };
+        }
+        
+        if (ApplicationLifetime is ISingleViewApplicationLifetime singleView)
+        {
+            singleView.MainView = new MainView
             {
                 DataContext = vm
             };

@@ -1,10 +1,8 @@
-﻿using System;
-using Avalonia;
-using AvaloniaDraw.Toolbox;
+﻿using AvaloniaDraw.Toolbox;
 
 namespace AvaloniaDraw;
 
-public class MainWindowViewModel(ToolboxPanelViewModel toolboxPanel, DrawingCanvasViewModel drawingCanvas)
+public class MainViewViewModel(ToolboxPanelViewModel toolboxPanel, DrawingCanvasViewModel drawingCanvas)
     : ViewModelBase
 {
     public ToolboxPanelViewModel ToolboxPanel { get; } = toolboxPanel;
