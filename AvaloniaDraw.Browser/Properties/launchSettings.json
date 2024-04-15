@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "AvaloniaDraw.CrossPlatform.Browser": {
+    "AvaloniaDraw.Browser": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
