@@ -1,8 +1,8 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.ReactiveUI;
-using System;
 
-namespace AvaloniaDraw;
+namespace AvaloniaDraw.Desktop;
 
 sealed class Program
 {
@@ -16,8 +16,8 @@ sealed class Program
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
-                     .UsePlatformDetect()
-                     .WithInterFont()
-                     .LogToTrace()
-                     .UseReactiveUI();
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace()
+            .UseReactiveUI();
 }

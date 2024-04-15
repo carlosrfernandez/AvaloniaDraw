@@ -7,7 +7,7 @@ public static class ServiceCollectionExtensions
 {
     public static void AddDrawingServices(this IServiceCollection services)
     {
-        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<MainViewViewModel>();
         services.AddTransient<ToolboxPanelViewModel>();
         services.AddTransient<DrawingCanvasViewModel>();
     }
