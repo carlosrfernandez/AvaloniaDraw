@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Collections.Immutable;
+using Avalonia;
 using Avalonia.Input;
 
 namespace AvaloniaDraw;
@@ -12,9 +13,10 @@ public readonly record struct PointerInfo(
     Point Position,
     bool IsPressed,
     bool IsDragging,
-    bool IsEndDrag)
+    bool IsEndDrag,
+    ImmutableHashSet<Key> PressedKeys)
 {
-    public static PointerInfo Empty => new(new Point(0, 0), false, false, false);
+    public static PointerInfo Empty => new(new Point(0, 0), false, false, false, []);
 
     public PointerInfo OnMove(PointerEventArgs pointerMoved, Visual relativeTo)
     {
@@ -43,6 +45,32 @@ public readonly record struct PointerInfo(
         {
             IsPressed = false,
             IsEndDrag = isEndDrag
+        };
+    }
+
+    public PointerInfo OnKeyDown(KeyEventArgs e)
+    {   
+        var newKeys = PressedKeys.Add(e.Key);
+        var isDragging = IsDragging;
+        if (e.Key == Key.Escape)
+        {
+            isDragging = false;
+        }
+        
+        return this with
+        {
+            PressedKeys = newKeys,
+            IsDragging = isDragging
+        };
+    }
+    
+    public PointerInfo OnKeyUp(KeyEventArgs e)
+    {
+        var newKeys = PressedKeys.Remove(e.Key);
+        
+        return this with
+        {
+            PressedKeys = newKeys
         };
     }
 }

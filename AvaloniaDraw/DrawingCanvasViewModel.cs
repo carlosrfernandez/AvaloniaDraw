@@ -3,13 +3,14 @@ using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Avalonia;
+using Avalonia.Input;
 using Avalonia.Media;
 using AvaloniaDraw.Shapes;
 using ReactiveUI;
 
 namespace AvaloniaDraw;
 
-public class DrawingCanvasViewModel : ViewModelBase, IDisposable
+public sealed class DrawingCanvasViewModel : ViewModelBase, IDisposable
 {
     private readonly CompositeDisposable _disposables = new();
     private readonly SerialDisposable _pointerInfoDisposable = new();
@@ -63,6 +64,7 @@ public class DrawingCanvasViewModel : ViewModelBase, IDisposable
     private void OnPointerInfoChanged(PointerInfo pointerInfo)
     {
         PointerInfoText = FormatPointerInfo(pointerInfo);
+        var cancelCurrentShape = pointerInfo.PressedKeys.Contains(Key.Escape);
         
         if (pointerInfo.IsDragging && _activeShape == null)
         {
@@ -82,16 +84,18 @@ public class DrawingCanvasViewModel : ViewModelBase, IDisposable
 
         if (_activeShape != null && pointerInfo.IsPressed)
         {
-            // If the mouse if down and we get an event coming through then update the bounds of the shape
-            var top = Math.Min(_activeShape.Origin.Y, pointerInfo.Position.Y);
-            var bottom = Math.Max(_activeShape.Origin.Y, pointerInfo.Position.Y);
-            var left = Math.Min(_activeShape.Origin.X, pointerInfo.Position.X);
-            var right = Math.Max(_activeShape.Origin.X, pointerInfo.Position.X);
+            if (cancelCurrentShape)
+            {
+                Shapes.Remove(_activeShape);
+                _activeShape = null;
+                return;
+            }
+            
+            var makeUniform = pointerInfo.PressedKeys.Contains(Key.LeftShift) ||
+                             pointerInfo.PressedKeys.Contains(Key.RightShift);
 
-            var topLeft = new Point(left, top);
-            var bottomRight = new Point(right, bottom);
-
-            var bounds = new Rect(topLeft, bottomRight);
+            var bounds = DetermineShapeBounds(_activeShape, pointerInfo, makeUniform);
+            
             _activeShape.Bounds = bounds;
             _activeShape.EndPosition = pointerInfo.Position;
         }
@@ -106,8 +110,48 @@ public class DrawingCanvasViewModel : ViewModelBase, IDisposable
             }
         }
     }
+    
+    private static Rect DetermineShapeBounds(ShapeViewModel activeShape, PointerInfo pointerInfo, bool makeUniform)
+    {
+        Rect bounds;
+        if (makeUniform)
+        {
+            // Finds the smallest side of the shape and uses that to create a bounding box that is square in shape
+            // in the direction of the position of the pointer.
+            var distance = Math.Min(
+                Math.Abs(activeShape.Origin.X - pointerInfo.Position.X),
+                Math.Abs(activeShape.Origin.Y - pointerInfo.Position.Y)
+            );
 
-    private string FormatPointerInfo(PointerInfo pointerInfo)
+            var xPosition = pointerInfo.Position.X < activeShape.Origin.X
+                ? activeShape.Origin.X - distance
+                : activeShape.Origin.X + distance;
+
+            var yPosition = pointerInfo.Position.Y < activeShape.Origin.Y
+                ? activeShape.Origin.Y - distance
+                : activeShape.Origin.Y + distance;
+
+            return CalculateBoundsFromOriginToPosition(activeShape.Origin, new Point(xPosition, yPosition));
+        }
+
+        return CalculateBoundsFromOriginToPosition(activeShape.Origin, pointerInfo.Position);
+
+        Rect CalculateBoundsFromOriginToPosition(Point origin, Point position)
+        {
+            var top = Math.Min(origin.Y, position.Y);
+            var bottom = Math.Max(origin.Y, position.Y);
+            var left = Math.Min(origin.X, position.X);
+            var right = Math.Max(origin.X, position.X);
+
+            var topLeft = new Point(left, top);
+            var bottomRight = new Point(right, bottom);
+
+            bounds = new Rect(topLeft, bottomRight);
+            return bounds;
+        }
+    }
+
+    private static string FormatPointerInfo(PointerInfo pointerInfo)
     {
         return $"X: {pointerInfo.Position.X} Y: {pointerInfo.Position.Y}";
     }

@@ -27,7 +27,9 @@ public class CapturePointerInfoBehaviour : Behavior<Control>
 
     private void SetPointerInfoStream()
     {
-        if (AssociatedObject == null)
+        var topLevel = TopLevel.GetTopLevel(AssociatedObject);
+        
+        if (AssociatedObject == null || topLevel == null)
         {
             return;
         }
@@ -43,28 +45,49 @@ public class CapturePointerInfoBehaviour : Behavior<Control>
             .FromEventPattern<PointerReleasedEventArgs>(AssociatedObject, nameof(Control.PointerReleased))
             .Select(pr => new PointerEvent { PointerReleasedEvent = pr.EventArgs });
         
-        var pointerEvents = Observable.Merge(pointerMoved, pointerPressed, pointerReleased)
+        // Hook into the key press events from the top level (the main window) as 
+        // the events are not available on the canvas
+        var keyDown = Observable.FromEventPattern<KeyEventArgs>(topLevel, nameof(Control.KeyDown))
+            .Select(pm => new PointerEvent { KeyDownEvent = pm.EventArgs });
+        
+        var keyUp = Observable.FromEventPattern<KeyEventArgs>(topLevel, nameof(Control.KeyUp))
+            .Select(pm => new PointerEvent { KeyUpEvent = pm.EventArgs });
+
+        var pointerEvents = Observable.Merge(pointerMoved, pointerPressed, pointerReleased,
+                                             keyDown, keyUp)
             .Scan(PointerInfo.Empty,
-                (current, update) =>
-                {
-                    if (update.MoveEvent != null)
-                    {
-                        return current.OnMove(update.MoveEvent, AssociatedObject);
-                    }
-
-                    if (update.PointerPressedEvent != null)
-                    {
-                        return current.OnPressed(update.PointerPressedEvent);
-                    }
-
-                    if (update.PointerReleasedEvent != null)
-                    {
-                        return current.OnReleased(update.PointerReleasedEvent);
-                    }
-
-                    return current;
-                });
+                (current, update) => UpdatePointerInfo(AssociatedObject, update, current));
 
         PointerInfoStream = pointerEvents;
+    }
+
+    private PointerInfo UpdatePointerInfo(Visual relativeTo, PointerEvent update, PointerInfo current)
+    {
+        if (update.MoveEvent != null)
+        {
+            return current.OnMove(update.MoveEvent, relativeTo);
+        }
+
+        if (update.PointerPressedEvent != null)
+        {
+            return current.OnPressed(update.PointerPressedEvent);
+        }
+
+        if (update.PointerReleasedEvent != null)
+        {
+            return current.OnReleased(update.PointerReleasedEvent);
+        }
+                    
+        if (update.KeyDownEvent != null)
+        {
+            return current.OnKeyDown(update.KeyDownEvent);
+        }
+                    
+        if (update.KeyUpEvent != null)
+        {
+            return current.OnKeyUp(update.KeyUpEvent);
+        }
+
+        return current;
     }
 }
