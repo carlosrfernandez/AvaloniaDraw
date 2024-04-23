@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>AvaloniaDraw.CrossPlatform</string>
+	<string>AvaloniaDraw</string>
 	<key>CFBundleIdentifier</key>
-	<string>companyName.AvaloniaDraw.CrossPlatform</string>
+	<string>com.companyName.AvaloniaDraw</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
