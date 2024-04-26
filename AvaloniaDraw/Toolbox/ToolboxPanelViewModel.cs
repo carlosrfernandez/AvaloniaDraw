@@ -1,4 +1,5 @@
-﻿using System.Reactive.Linq;
+﻿using System.Reactive;
+using System.Reactive.Linq;
 using Avalonia.Media;
 using AvaloniaDraw.Shapes;
 using DynamicData.Binding;
@@ -10,6 +11,7 @@ public class ToolboxPanelViewModel : ViewModelBase
 {
     private static readonly Color DefaultOutlineColour = Colors.Black;
     private static readonly Color DefaultFillColour = Colors.Red;
+    
     
     public ToolboxPanelViewModel()
     {
@@ -65,5 +67,10 @@ public class ToolboxPanelViewModel : ViewModelBase
     {
         get => _shapeType;
         set => this.RaiseAndSetIfChanged(ref _shapeType, value);
+    }
+
+    public void OnClearButtonClicked()
+    {
+        MessageBus.Current.SendMessage(Unit.Default, Topics.ClearShapes);
     }
 }

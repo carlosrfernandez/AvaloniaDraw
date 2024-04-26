@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Avalonia;
@@ -34,7 +35,10 @@ public sealed class DrawingCanvasViewModel : ViewModelBase, IDisposable
             .Subscribe(w => _strokeWidth = w));
 
         _disposables.Add(MessageBus.Current.ListenIncludeLatest<string>(Topics.ShapeType)
-            .Subscribe(s => _shapeType = s));        
+            .Subscribe(s => _shapeType = s));
+
+        _disposables.Add(MessageBus.Current.Listen<Unit>(Topics.ClearShapes)
+            .Subscribe(x => Shapes.Clear()));
     }
 
     public ObservableCollection<ShapeViewModel> Shapes { get; } = [];
